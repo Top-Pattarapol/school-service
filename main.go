@@ -6,15 +6,10 @@ import (
 
 	"github.com/Top-Pattarapol/school-service/service"
 
-	"github.com/Top-Pattarapol/school-service/database"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-
-	database.Init()
-	defer database.Close()
-
 	r := gin.Default()
 	setPath(r)
 	r.Run(getPort())

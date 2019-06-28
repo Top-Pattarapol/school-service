@@ -8,19 +8,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
-
-func Init() {
+func connect() *sql.DB {
 	database, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err.Error())
-		return
+		return nil
 	}
-	db = database
-}
-
-func Close() {
-	db.Close()
+	return database
 }
 
 func baseExec(db *sql.DB, query string, args ...interface{}) error {
