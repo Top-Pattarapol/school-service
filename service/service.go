@@ -11,18 +11,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ParamToInt(c *gin.Context, key string) (int, error) {
-	param := c.Param(key)
-	value, err := strconv.Atoi(param)
-	if err != nil {
-		return 0, err
-	}
-	return value, nil
-}
-
 func DeleteTodosById(c *gin.Context) {
 
-	id, err := ParamToInt(c, "id")
+	id, err := paramToInt(c, "id")
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -67,7 +58,7 @@ func PostTodos(c *gin.Context) {
 
 func GetTodosById(c *gin.Context) {
 
-	id, err := ParamToInt(c, "id")
+	id, err := paramToInt(c, "id")
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -116,7 +107,7 @@ func GetTodos(c *gin.Context) {
 
 func UpdateTodo(c *gin.Context) {
 
-	id, err := ParamToInt(c, "id")
+	id, err := paramToInt(c, "id")
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -140,4 +131,13 @@ func UpdateTodo(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, t)
+}
+
+func paramToInt(c *gin.Context, key string) (int, error) {
+	param := c.Param(key)
+	value, err := strconv.Atoi(param)
+	if err != nil {
+		return 0, err
+	}
+	return value, nil
 }
